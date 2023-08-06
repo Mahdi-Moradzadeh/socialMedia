@@ -1,0 +1,19 @@
+{
+  "name": "socialmedia",
+  "version": "1.0.0",
+  "description": "This is an backend API engine to provide access to unstructured database using MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "author": "Mahdi Moradzadeh",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^7.0.2"
+  }
+}
