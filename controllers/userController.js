@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought} = require('../models');
 
 const userController = {
     async getAllUsers(req, res) {
@@ -25,7 +25,7 @@ const userController = {
                 })
                 .select('-__v');
             if (!singleUser) {
-                res.status(404).json({ message: 'No user found with this id!' });
+                res.status(404).json({ message: 'No user found!' });
                 return;
             }
             res.json(singleUser);
@@ -47,9 +47,9 @@ const userController = {
 
     async updateUser({ params, body }, res) {
         try {
-            const singleUser = await User.findOneAndUpdate({ _id: params.userId }, body, { new: true, runValidators: true });
+            const singleUser = await User.findOneAndUpdate({ _id: params.userId }, { $set: req.body }, { new: true, runValidators: true });
             if (!singleUser) {
-                res.status(404).json({ message: 'No user found with this id!' });
+                res.status(404).json({ message: 'No user found!' });
                 return;
             }
             res.json(singleUser);
@@ -63,7 +63,7 @@ const userController = {
         try {
             const singleUser = await User.findOneAndDelete({ _id: params.userId });
             if (!singleUser) {
-                res.status(404).json({ message: 'No user found with this id!' });
+                res.status(404).json({ message: 'No user found!' });
                 return;
             }
             res.json(singleUser);
@@ -81,7 +81,7 @@ const userController = {
                 { new: true }
             );
             if (!singleUser) {
-                res.status(404).json({ message: 'No user found with this id!' });
+                res.status(404).json({ message: 'No user found!' });
                 return;
             }
             res.json(singleUser);
@@ -99,7 +99,7 @@ const userController = {
                 { new: true }
             );
             if (!singleUser) {
-                res.status(404).json({ message: 'No user found with this id!' });
+                res.status(404).json({ message: 'No user found!' });
                 return;
             }
             res.json(singleUser);

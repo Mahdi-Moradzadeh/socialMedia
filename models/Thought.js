@@ -7,7 +7,7 @@ const reactionSchema = new Schema(
             type: Schema.Types.ObjectId,
             default: () => new Types.ObjectId()
         },
-        reactionBody: {
+        reactionContent: {
             type: String,
             required: true,
             maxlength: 280
@@ -19,7 +19,7 @@ const reactionSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (createdAtVal) => dateFormat(createdAtVal)
+            get: (createdAtVal) => dateFormat.format_datetime(createdAtVal)
         }
     },
     {
@@ -31,7 +31,7 @@ const reactionSchema = new Schema(
 
 const thoughtSchema = new Schema(
     {
-        thoughtText: {
+        thoughtContent: {
             type: String,
             required: true,
             minlength: 1,
@@ -45,12 +45,7 @@ const thoughtSchema = new Schema(
             type: String,
             required: true,
         },
-        reactions: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Reaction'
-            }
-        ]   
+        reactions: [reactionSchema]   
     },
     {
         toJSON: {
