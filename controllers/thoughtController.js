@@ -60,7 +60,7 @@ const thoughtController = {
 
     async updateThought({ params, body }, res) {
         try {
-            const singleThought = await Thought.findOne({ _id: params.thoughtId }, body, { new: true, runValidators: true });
+            const singleThought = await Thought.findOneAndUpdate({ _id: params.thoughtId }, body, { new: true, runValidators: true });
             if (!singleThought) {
                 res.status(404).json({ message: 'No thought found!' });
                 return;
@@ -88,7 +88,15 @@ const thoughtController = {
 
     async addReaction({ params, body }, res) {
         try {
-            const singleThought = await Thought.findOneAndUpdate({ _id: params.thoughtId }, { $push: { reactions: body } }, { new: true, runValidators: true });
+            const singleThought = await Thought.findOneAndUpdate(
+                { _id: params.thoughtId },
+                { $push: { reactions: body } },
+                { new: true, runValidators: true }
+            );
+            if (!singleThought) {
+                res.status(404).json({ message: 'No thought found!' });
+                return;
+            }
             res.json(singleThought);
         } catch (err) {
             console.log(err);
@@ -98,7 +106,7 @@ const thoughtController = {
 
     async deleteReaction({ params }, res) {
         try {
-            const singleThought = await Thought.findOneAndUpdate({ _id: params.thoughtId }, { $pull: { reactions: { reactionId: params.reactionId } } }, { new: true, runValidators: true });
+            const singleThought = await Thought.findOneAndDelete({ _id: params.thoughtId });
             if (!singleThought) {
                 res.status(404).json({ message: 'No thought found!' });
                 return;

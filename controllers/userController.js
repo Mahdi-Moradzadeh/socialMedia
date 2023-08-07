@@ -47,7 +47,7 @@ const userController = {
 
     async updateUser({ params, body }, res) {
         try {
-            const singleUser = await User.findOneAndUpdate({ _id: params.userId }, { $set: req.body }, { new: true, runValidators: true });
+            const singleUser = await User.findOneAndUpdate({ _id: params.userId }, { $set: body }, { new: true, runValidators: true });
             if (!singleUser) {
                 res.status(404).json({ message: 'No user found!' });
                 return;
